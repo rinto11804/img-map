@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>Img-manipulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <input type="file" name="Open" id="file">
+    <label for="file">
+        Open File
+    </label>
+    <div id="editor">
+        <img id="img"></img>
+        <button id="grayscale">grayscale</button>
+    </div>
+</body>
+
+<script type="module">
+    import init, { grayscale } from "./pkg/img_map.js";
+    async function main() {
+        await init();
+    }
+    main();
+
+    document.getElementById("file").addEventListener("change", (event) => {
+        let file = event.target.files[0];
+        const img = document.getElementById("img");
+        var reader = new FileReader();
+        reader.onloadend = function (e) {
+            img.src = reader.result;
+            console.log(reader)
+        }
+        reader.readAsDataURL(file);
+        img.style.display = "inline"
+        document.getElementById('editor').appendChild(img)
+    });
+
+    document.getElementById("grayscale").addEventListener("click", () => {
+        grayscale();
+        console.log("grayscale")
+    });
+</script>
+
+</html>

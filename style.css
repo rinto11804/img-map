@@ -1,0 +1,36 @@
+#file {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+}
+
+label {
+  display: block;
+  position: relative;
+  width: 9rem;
+  height: 2rem;
+  border-radius: 5px;
+  border:2px solid #272727;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #242424;
+  font-weight: bold;
+  cursor: pointer;
+}
+#editor{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button{
+  position: absolute;
+  top:34rem;
+}
+#img{
+  display:none;
+  width: 40rem;
+  height: 30rem;
+}
