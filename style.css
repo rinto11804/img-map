@@ -1,47 +1,53 @@
 html {
-      background-color: antiquewhite;
-    }
+  background-color: antiquewhite;
+}
 
-    #file {
-      opacity: 0;
-      width: 0.1px;
-      height: 0.1px;
-      position: absolute;
-    }
+#file {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+}
 
-    label {
-      display: block;
-      position: relative;
-      width: 9rem;
-      height: 2rem;
-      border-radius: 5px;
-      border: 2px solid #272727;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #242424;
-      font-weight: bold;
-      cursor: pointer;
-    }
+label {
+  display: block;
+  position: relative;
+  width: 9rem;
+  height: 2rem;
+  border-radius: 5px;
+  border: 2px solid #272727;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #242424;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    #editor {
-      margin: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+#editor {
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    button {
-      position: absolute;
-      top: 35rem;
-    }
+button {
+  position: absolute;
+  top: 35rem;
+}
 
-    button:disabled {
-      cursor: not-allowed;
-    }
+button:disabled {
+  cursor: not-allowed;
+}
 
-    #img,#output{
-      display: none;
-      width: 40rem;
-      height: 30rem;
-    }
+#img,
+#output {
+  display: none;
+  width: 40rem;
+  height: 30rem;
+}
+
+.filters{
+  display: flex;
+  gap: 4rem;
+}

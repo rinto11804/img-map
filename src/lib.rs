@@ -12,11 +12,16 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn process(url: &str) -> String {
+pub fn process(url: &str,filter:&str) -> String {
     let img = decode_image(url);
-    let processed_img = image::imageops::rotate90(&img);
 
-    encode_image(&processed_img)
+    let processed_img = match filter{
+        "rotate90" => Some(image::imageops::rotate90(&img)),
+        "blur" => Some(image::imageops::blur(&img,5.0)),
+        _ => None
+    };
+
+    encode_image(&processed_img.unwrap())
 }
 
 fn encode_image(img: &ImageBuffer<Rgba<u8>, Vec<u8>>) -> String {

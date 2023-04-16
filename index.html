@@ -15,10 +15,15 @@
     Open File
   </label>
 
+  <a href="" download id="saveit">Save file</a>
+
 
   <div id="editor">
     <img id="img"></img>
-    <button id="rotate90">rotoate90</button>
+    <div class="filters">
+      <button class="rw">rotate90</button>
+      <button class="rw">blur</button>
+    </div>
   </div>
 </body>
 
@@ -43,20 +48,27 @@
   });
 
 
-  const btn = document.getElementById("rotate90");
+  const btn = document.querySelectorAll(".rw");
 
-  btn.addEventListener("click", () => {
-    btn.setAttribute("disabled", true);
-    btn.textContent = "processing...";
+  btn.forEach(element => {
+    element.addEventListener("click", () => {
 
-    const base64_img = original_img.src.match(regex_base64)[2];
-    let processed_base64 = process(base64_img);
+      let filter = element.textContent;
+      console.log(filter)
+      element.setAttribute("disabled", true);
+      element.textContent = "processing...";
 
-    btn.textContent = "Success";
-    btn.setAttribute("disabled", false);
+      const base64_img = original_img.src.match(regex_base64)[2];
+      let processed_base64 = process(base64_img, filter);
 
-    original_img.src = "data:image/png;base64," + processed_base64;
+      element.textContent = "Success";
+      element.setAttribute("disabled", false);
+
+      original_img.src = "data:image/png;base64," + processed_base64;
+      document.getElementById("saveit").href = original_img.src;
+    });
   });
+
 </script>
 </body>
 
