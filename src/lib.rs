@@ -1,8 +1,9 @@
-use base64::{engine::general_purpose, Engine as _};
-use image::ImageOutputFormat;
 use std::io::Cursor;
+
+use base64::{engine::general_purpose, Engine as _};
+use image::{DynamicImage, ImageBuffer, Rgba};
+
 use wasm_bindgen::prelude::*;
-use web_sys::{window, HtmlImageElement};
 
 #[wasm_bindgen]
 extern "C" {
@@ -11,25 +12,25 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn grayscale() -> Result<(), wasm_bindgen::JsValue> {
-    let doc = window().unwrap().document().unwrap();
-    let img = doc
-        .get_element_by_id("img")
-        .unwrap()
-        .dyn_into::<HtmlImageElement>()?;
+pub fn process(url: &str) -> String {
+    let img = decode_image(url);
+    let processed_img = image::imageops::rotate90(&img);
 
-    let image = image::load_from_memory(&img.src().as_bytes()).unwrap();
-    // let grayscale_img = image.grayscale();
+    encode_image(&processed_img)
+}
 
-    let mut image_data: Vec<u8> = Vec::new();
-    image
-        .write_to(&mut Cursor::new(&mut image_data), ImageOutputFormat::Png)
+fn encode_image(img: &ImageBuffer<Rgba<u8>, Vec<u8>>) -> String {
+    let mut buf: Vec<u8> = Vec::new();
+
+    img.write_to(&mut Cursor::new(&mut buf), image::ImageFormat::Png)
         .unwrap();
-    let res_base64 = general_purpose::STANDARD.encode(&image_data);
-    let src = format!("data:image/png;base64,{}", res_base64);
-   img.set_src(&src);
+    let encode = general_purpose::STANDARD.encode(&buf);
+    encode
+}
 
-    let body = doc.body().unwrap();
-    body.append_child(&img)?;
-    Ok(())
+fn decode_image(base_64: &str) -> DynamicImage {
+    let decode = general_purpose::STANDARD.decode(base_64).unwrap();
+    let dynamic_img =
+        image::load_from_memory_with_format(&decode, image::ImageFormat::Png).unwrap();
+    dynamic_img
 }
