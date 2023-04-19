@@ -1,39 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+import './style.css'
+// import { setupCounter } from './counter.js'
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Map</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-  <input type="file" name="Open" id="file">
-  <label for="file">
-    Open File
-  </label>
-
-  <a href="" download id="saveit">Save file</a>
-
-
-  <div id="editor">
-    <img id="img"></img>
-    <div class="filters">
-      <button class="rw">rotate90</button>
-      <button class="rw">blur</button>
-    </div>
-  </div>
-</body>
-
-<script type="module">
-  import init, { process } from "./pkg/img_map.js"
+ import init, { process } from "./wasm/img_map.js"
   async function main() {
     await init();
   }
   main();
-
   const original_img = document.getElementById("img");
   const regex_base64 = /data:image\/([a-zA-Z]*);base64,([^\"]*)/;
 
@@ -52,24 +24,28 @@
 
   btn.forEach(element => {
     element.addEventListener("click", () => {
+      if (original_img.src == ""){
+        return
+      }
 
       let filter = element.textContent;
-      console.log(filter)
       element.setAttribute("disabled", true);
-      element.textContent = "processing...";
 
       const base64_img = original_img.src.match(regex_base64)[2];
       let processed_base64 = process(base64_img, filter);
 
-      element.textContent = "Success";
       element.setAttribute("disabled", false);
 
       original_img.src = "data:image/png;base64," + processed_base64;
       document.getElementById("saveit").href = original_img.src;
     });
   });
+// document.querySelector('#app').innerHTML = `
+//   <div>
+//     <div class="card">
+//       <button id="counter" type="button"></button>
+//     </div>
+//   </div>
+// `
 
-</script>
-</body>
-
-</html>
+// setupCounter(document.querySelector('#counter'))

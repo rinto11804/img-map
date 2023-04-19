@@ -1,0 +1,14 @@
+{
+  "name": "img-map",
+  "version": "0.1.0",
+  "files": [
+    "img_map_bg.wasm",
+    "img_map.js",
+    "img_map.d.ts"
+  ],
+  "module": "img_map.js",
+  "types": "img_map.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
